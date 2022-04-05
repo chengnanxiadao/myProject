@@ -1,4 +1,4 @@
-package com.myalgorithmproject.day20220404;
+package com.myalgorithmproject.day202204.day20220404;
 
 class NumArray {
 

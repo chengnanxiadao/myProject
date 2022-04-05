@@ -1,4 +1,4 @@
-package com.myalgorithmproject.day20220330;
+package com.myalgorithmproject.day202203.day20220330;
 
 import java.util.*;
 //你有 k 个服务器，编号为 0 到 k-1 ，它们可以同时处理多个请求组。每个服务器有无穷的计算能力但是 不能同时处理超过一个请求 。请求分配到服务器的规则

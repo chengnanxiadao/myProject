@@ -1,4 +1,4 @@
-package com.myalgorithmproject.day20200401;
+package com.myalgorithmproject.day202204.day20200401;
 
 import java.util.Arrays;
 import java.util.HashMap;

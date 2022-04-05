@@ -1,4 +1,4 @@
-package com.myalgorithmproject.day20220403;
+package com.myalgorithmproject.day202204.day20220403;
 
 public class Solution20220403 {
     public char nextGreatestLetter(char[] letters, char target) {
