@@ -1,4 +1,4 @@
-package com.myalgorithmproject.day202204.day20220424;
+package com.myalgorithmproject.day202204.day20220420.day20220424;
 
 class Solution20220424 {
     public int binaryGap(int n) {
