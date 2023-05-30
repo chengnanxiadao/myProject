@@ -443,6 +443,7 @@ class Solution44 {
 
 /**
  * 剑指002
+ * 我想的和题解大致思路差不多，也是模拟加法运算的过程，不过看起来题解对char的应用在时间、空间上都要高效一些
  */
 class Solution46 {
     public static String addBinary(String a, String b) {
@@ -463,7 +464,7 @@ class Solution46 {
         StringBuilder sb = new StringBuilder();
         int ch = 0;
         for (int i = 0; i < lenght; i++) {
-            int ach = Integer.parseInt(String.valueOf(a.charAt(lenght - 1 - i))) ;
+            int ach = Integer.parseInt(String.valueOf(a.charAt(lenght - 1 - i)));
             int bch = Integer.parseInt(String.valueOf(b.charAt(lenght - 1 - i)));
             if (ach + bch + ch > 1) {
                 int res = (ach + bch + ch) % 2;
@@ -480,7 +481,7 @@ class Solution46 {
         char[] chars = sb.toString().toCharArray();
         StringBuilder sb2 = new StringBuilder();
         for (int i = 0; i < chars.length; i++) {
-            sb2.append(chars[chars.length-1-i]);
+            sb2.append(chars[chars.length - 1 - i]);
         }
         return sb2.toString();
 
@@ -489,6 +490,34 @@ class Solution46 {
 
     public static void main(String[] args) {
         String s = addBinary("11", "10");
+
+        String s2 = addBinary2("11", "10");
+    }
+
+    /**
+     * 官方题解
+     * @param a
+     * @param b
+     * @return
+     */
+    public static String addBinary2(String a, String b) {
+        StringBuilder ans = new StringBuilder();
+
+        int n = Math.max(a.length(), b.length()), carry = 0;
+        for (int i = 0; i < n; ++i) {
+            carry += i < a.length() ? (a.charAt(a.length() - 1 - i) - '0') : 0;
+            carry += i < b.length() ? (b.charAt(b.length() - 1 - i) - '0') : 0;
+            ans.append((char) (carry % 2 + '0'));
+            carry /= 2;
+        }
+
+        if (carry > 0) {
+            ans.append('1');
+        }
+        ans.reverse();
+
+        return ans.toString();
+
     }
 }
 
