@@ -478,13 +478,7 @@ class Solution46 {
         if (ch == 1) {
             sb.append('1');
         }
-        char[] chars = sb.toString().toCharArray();
-        StringBuilder sb2 = new StringBuilder();
-        for (int i = 0; i < chars.length; i++) {
-            sb2.append(chars[chars.length - 1 - i]);
-        }
-        return sb2.toString();
-
+        return sb.reverse().toString();
 
     }
 
@@ -496,6 +490,7 @@ class Solution46 {
 
     /**
      * 官方题解
+     *
      * @param a
      * @param b
      * @return
@@ -518,6 +513,39 @@ class Solution46 {
 
         return ans.toString();
 
+    }
+}
+
+
+class Solution47 {
+    public static int[] countBits(int n) {
+        int[] ins = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            ins[i] = Integer.bitCount(i);
+        }
+        return ins;
+    }
+
+    public static void main(String[] args) {
+        int[] ints = countBits(7);
+        System.out.println(ints);
+    }
+
+    public static int[] countBits_2(int n) {
+        int[] ins = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            ins[i] = getBitCount(i);
+        }
+        return ins;
+    }
+
+    public static int getBitCount(int n) {
+        int res = 0;
+        while (n > 0){
+            n = n & (n-1);
+            res++;
+        }
+        return res;
     }
 }
 
