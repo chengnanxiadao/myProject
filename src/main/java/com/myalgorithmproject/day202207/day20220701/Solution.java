@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-class Solution {
+class Solution1 {
 
     public static void main(String[] args) {
         //[0,  0, 0,  0, null, null,  0, 0, 0, 0, 0]
@@ -541,12 +541,42 @@ class Solution47 {
 
     public static int getBitCount(int n) {
         int res = 0;
-        while (n > 0){
-            n = n & (n-1);
+        while (n > 0) {
+            n = n & (n - 1);
             res++;
         }
         return res;
     }
 }
 
+class Solution48 {
+    public static int singleNumber(int[] nums) {
+        if(nums.length==1){
+            return nums[0];
+        }
+        Arrays.sort(nums);
+        if (nums[0] != nums[1]) {
+            return nums[0];
+        }
+        if (nums[nums.length - 1] != nums[nums.length - 2]) {
+            return nums[nums.length - 1];
+        }
 
+        int res = nums[0];
+        // 边界条件
+        for (int i = 1; i < nums.length-1; i++) {
+            if(nums[i-1] != nums[i] && nums[i] != nums[i+1]){
+                return nums[i];
+            }
+        }
+
+        return res;
+
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {30000,500,100,30000,100,30000,100};
+        int singleNumber = singleNumber(nums);
+        System.out.println(singleNumber);
+    }
+}
