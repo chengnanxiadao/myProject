@@ -673,3 +673,34 @@ class Solution51 {
         List<List<Integer>> lists = threeSum(nums);
     }
 }
+
+class Solution52 {
+    public static int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        if(n < 1){
+            return 0;
+        }
+        int res = Integer.MAX_VALUE;
+        int start = 0;
+        int end = 0;
+        int sum = 0;
+        //滑动窗口
+        while(end < n){
+            sum += nums[end];
+            while(sum >= target){
+                res = Math.min(res,end-start+1);
+                sum -= nums[start];
+                start++;
+            }
+            end++;
+        }
+        return res == Integer.MAX_VALUE ? 0 : res;
+
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{2,3,1,2,4,3};
+        int i = minSubArrayLen(7,nums);
+
+    }
+}
