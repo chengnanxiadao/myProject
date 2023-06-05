@@ -551,7 +551,7 @@ class Solution47 {
 
 class Solution48 {
     public static int singleNumber(int[] nums) {
-        if(nums.length==1){
+        if (nums.length == 1) {
             return nums[0];
         }
         Arrays.sort(nums);
@@ -564,8 +564,8 @@ class Solution48 {
 
         int res = nums[0];
         // 边界条件
-        for (int i = 1; i < nums.length-1; i++) {
-            if(nums[i-1] != nums[i] && nums[i] != nums[i+1]){
+        for (int i = 1; i < nums.length - 1; i++) {
+            if (nums[i - 1] != nums[i] && nums[i] != nums[i + 1]) {
                 return nums[i];
             }
         }
@@ -575,7 +575,7 @@ class Solution48 {
     }
 
     public static void main(String[] args) {
-        int[] nums = {30000,500,100,30000,100,30000,100};
+        int[] nums = {30000, 500, 100, 30000, 100, 30000, 100};
         int singleNumber = singleNumber(nums);
         System.out.println(singleNumber);
     }
@@ -593,8 +593,8 @@ class Solution49 {
         }
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
-                if((nums[i] & nums[j]) ==0){
-                    res = Math.max(res,words[i].length()*words[j].length());
+                if ((nums[i] & nums[j]) == 0) {
+                    res = Math.max(res, words[i].length() * words[j].length());
                 }
 
             }
@@ -609,7 +609,7 @@ class Solution50 {
     public int[] twoSum(int[] numbers, int target) {
         int left = 0;
         int right = numbers.length - 1;
-        while(left<right) {
+        while (left < right) {
             if (numbers[left] + numbers[right] < target) {
                 left++;
             } else if (numbers[left] + numbers[right] > target) {
@@ -627,32 +627,32 @@ class Solution50 {
 class Solution51 {
     public static List<List<Integer>> threeSum(int[] nums) {
         List res = new ArrayList();
-        if(nums.length < 3){
+        if (nums.length < 3) {
             return res;
         }
         Arrays.sort(nums);
         //双指针法
         for (int left = 0; left < nums.length; left++) {
             // 需要和上一次枚举的数不相同
-            if(left > 0 && nums[left] == nums[left - 1]){
+            if (left > 0 && nums[left] == nums[left - 1]) {
                 continue;
             }
             int right = nums.length - 1;
             for (int middle = left + 1; middle < nums.length; middle++) {
                 // 需要和上一次枚举的数不相同
-                if(middle > left && nums[middle] == nums[middle - 1]){
+                if (middle > left && nums[middle] == nums[middle - 1]) {
                     continue;
                 }
                 // 需要保证 b 的指针在 c 的指针的左侧
-                while(middle < right && nums[left] + nums[middle] + nums[right] > 0){
+                while (middle < right && nums[left] + nums[middle] + nums[right] > 0) {
                     right--;
                 }
                 // 如果指针重合，随着 b 后续的增加
                 // 就不会有满足 a+b+c=0 并且 b<c 的 c 了，可以退出循环
-                if(middle == right){
+                if (middle == right) {
                     break;
                 }
-                if(nums[left] + nums[middle] + nums[right] == 0){
+                if (nums[left] + nums[middle] + nums[right] == 0) {
                     ArrayList list = new ArrayList();
                     list.add(nums[left]);
                     list.add(nums[middle]);
@@ -669,7 +669,7 @@ class Solution51 {
     }
 
     public static void main(String[] args) {
-        int[] nums = new int[]{-1,0,1,2,-1,-4};
+        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
         List<List<Integer>> lists = threeSum(nums);
     }
 }
@@ -677,7 +677,7 @@ class Solution51 {
 class Solution52 {
     public static int minSubArrayLen(int target, int[] nums) {
         int n = nums.length;
-        if(n < 1){
+        if (n < 1) {
             return 0;
         }
         int res = Integer.MAX_VALUE;
@@ -685,10 +685,10 @@ class Solution52 {
         int end = 0;
         int sum = 0;
         //滑动窗口
-        while(end < n){
+        while (end < n) {
             sum += nums[end];
-            while(sum >= target){
-                res = Math.min(res,end-start+1);
+            while (sum >= target) {
+                res = Math.min(res, end - start + 1);
                 sum -= nums[start];
                 start++;
             }
@@ -699,8 +699,28 @@ class Solution52 {
     }
 
     public static void main(String[] args) {
-        int[] nums = new int[]{2,3,1,2,4,3};
-        int i = minSubArrayLen(7,nums);
+        int[] nums = new int[]{2, 3, 1, 2, 4, 3};
+        int i = minSubArrayLen(7, nums);
+
+    }
+}
+
+class Solution53 {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int n = nums.length;
+        int result = 1;
+        int ret = 0;
+        int i = 0;
+        for (int j = 0; j < n; j++) {
+            result *= nums[j];
+            while (i <= j && result >= k) {
+                result /= nums[i];
+                i++;
+            }
+            ret += j - i + 1;
+        }
+
+        return ret;
 
     }
 }
