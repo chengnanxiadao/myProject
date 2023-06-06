@@ -718,6 +718,7 @@ class Solution53 {
                 i++;
             }
             ret += j - i + 1;
+
         }
 
         return ret;
