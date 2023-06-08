@@ -776,3 +776,29 @@ class Solution55 {
     }
 }
 
+class Solution56 {
+    public static int pivotIndex(int[] nums) {
+        int index = -1;
+        int sumLeft = 0;
+        int sumRight = Arrays.stream(nums).sum();
+
+        for (int i = 0; i < nums.length; i++) {
+            sumRight -= nums[i];
+            if(sumLeft == sumRight){
+                index = i;
+                break;
+            }
+            sumLeft += nums[i];
+
+        }
+        return index;
+
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{1,7,3,6,5,6};
+        int i = pivotIndex(nums);
+
+    }
+}
+
