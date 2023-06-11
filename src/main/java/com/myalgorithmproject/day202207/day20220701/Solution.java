@@ -802,3 +802,201 @@ class Solution56 {
     }
 }
 
+class NumMatrix {
+    int[][] nums;
+
+    public NumMatrix(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        nums = new int[n][m+1];
+        for(int i = 0;i < n;i++){
+            for(int j = 0;j < m;j++){
+                nums[i][j+1] = nums[i][j] + matrix[i][j];
+            }
+        }
+
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int sum = 0;
+        for(int i = row1;i < row2;i++){
+            sum += nums[i][col2 + 1] - nums[i][col1];
+        }
+        return sum;
+
+    }
+}
+
+class Solution57 {
+    //其实是求s1的全排列组合
+
+    /**
+     * 递归求法就是shit 这俩案例直接超时了
+     *   String s1 = "trinitrophenylmethylnitramine";
+     *   String s2 = "dinitrophenylhydrazinetrinitrophenylmethylnitramine";
+     * @param s1
+     * @param s2
+     * @return
+     */
+    public boolean checkInclusion(String s1, String s2) {
+        if(s1.length() > s2.length()){
+            return false;
+        }
+        long start = System.currentTimeMillis();
+        List<String> allPermuteStr = getAllPermuteStr(s1);
+        long end = System.currentTimeMillis();
+        System.out.println((end - start) / 1000);
+        boolean flag = false;
+        for (String s : allPermuteStr) {
+            if(s2.contains(s)){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+
+    }
+
+    public List<String> getAllPermuteStr(String s){
+        List<String> list = new ArrayList<>();
+        permute(s.toCharArray(),0,list);
+        return list;
+    }
+
+    public void permute(char[] chars, int index, List<String> list) {
+        if(index == chars.length - 1){
+            list.add(new String(chars));
+        }else{
+            boolean[] flag = new boolean[256];
+            for (int i = index; i < chars.length; i++) {
+                if(!flag[chars[i]]){
+                    flag[chars[i]] = true;
+                    swap(chars,i,index);
+                    permute(chars,index+1,list);
+                    swap(chars,i,index);
+                }
+
+            }
+        }
+    }
+
+    public void swap(char[] chars, int i ,int index){
+        char temp = chars[i];
+        chars[i] = chars[index];
+        chars[index] = temp;
+    }
+
+    @Test
+    public void test(){
+        String s1 = "trinitrophenylmethylnitramine";
+        String s2 = "dinitrophenylhydrazinetrinitrophenylmethylnitramine";
+        long start = System.currentTimeMillis();
+        boolean b = checkInclusion3(s1, s2);
+        long end = System.currentTimeMillis();
+        System.out.println((end - start) / 1000);
+    }
+
+    public boolean checkInclusion3(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+        if(n > m){
+            return false;
+        }
+        int[] ctn1 = new int[26];
+        int[] ctn2 = new int[26];
+        for (int i = 0; i < n; i++) {
+            ctn1[s1.charAt(i) - 'a']++;
+            ctn1[s2.charAt(i) - 'a']++;
+        }
+        if(Arrays.equals(ctn1,ctn2)){
+            return true;
+        }
+        for (int i = n; i < m; i++) {
+            ctn2[s2.charAt(i) - 'a']++;
+            ctn2[s2.charAt(i-n) - 'a']--;
+            if(Arrays.equals(ctn1,ctn2)){
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+
+
+    public boolean checkInclusion2(String s1, String s2) {
+        int[] s1Tmp = new int[26];
+        for(int i = 0; i < s1.length() ; i ++){
+            s1Tmp[s1.charAt(i) - 'a']++;
+        }
+        int[] s2Tmp = new int[26];
+        int l = 0;
+        for(int i = 0; i < s2.length() ; i ++){
+            s2Tmp[s2.charAt(i) - 'a']++;
+            boolean flag = true;
+            for(int j = 0 ; j < s2Tmp.length ; j ++){
+                if(s1Tmp[j] > 0 && s2Tmp[j] < s1Tmp[j]){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag){
+                while(l <= i - s1.length()){
+                    s2Tmp[s2.charAt(l++) - 'a']--;
+                }
+                flag = true;
+                for(int j = 0 ; j < s2Tmp.length ; j ++){
+                    if(s1Tmp[j] > 0 && s2Tmp[j] < s1Tmp[j]){
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+}
+
+class Solution58 {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        if(p.length() > s.length()){
+            return list;
+        }
+        int n = p.length();
+        int m = s.length();
+        int[] ctn1 = new int[26];
+        int[] ctn2 = new int[26];
+        for (int i = 0; i < n; i++) {
+            ++ctn1[p.charAt(i) - 'a'];
+            ++ctn2[s.charAt(i) - 'a'];
+        }
+        if(Arrays.equals(ctn1,ctn2)){
+            list.add(0);
+        }
+        for (int i = n; i < m; i++) {
+            ++ctn2[s.charAt(i) - 'a'];
+            --ctn2[s.charAt(i - n) - 'a'];
+            if(Arrays.equals(ctn1,ctn2)){
+                list.add(i - n + 1);
+            }
+        }
+        return list;
+
+    }
+
+    @Test
+    public void test(){
+        String s = "cbaebabacd";
+        String p ="abc";
+        List<Integer> anagrams = findAnagrams(s, p);
+        System.out.println(anagrams);
+    }
+}
+
+
