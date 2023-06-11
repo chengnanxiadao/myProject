@@ -997,6 +997,24 @@ class Solution58 {
         List<Integer> anagrams = findAnagrams(s, p);
         System.out.println(anagrams);
     }
+
+    class Solution59 {
+        //滑动窗口+字典，最大不重复字串长度
+        public int lengthOfLongestSubstring(String s) {
+            int[] dic = new int[128];
+            int max = 0;
+            for (int l = 0,r = 0; r <s.length() ; r++) {
+                dic[s.charAt(r)]++;
+                while(dic[s.charAt(r)] > 1){
+                    dic[s.charAt(l++)]--;
+                }
+                max = Math.max(max,r - l + 1);
+
+            }
+            return max;
+
+        }
+    }
 }
 
 
