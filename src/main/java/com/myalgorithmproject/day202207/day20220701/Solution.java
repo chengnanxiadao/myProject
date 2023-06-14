@@ -973,8 +973,8 @@ class Solution58 {
         int[] ctn1 = new int[26];
         int[] ctn2 = new int[26];
         for (int i = 0; i < n; i++) {
-            ++ctn1[p.charAt(i) - 'a'];
-            ++ctn2[s.charAt(i) - 'a'];
+            ctn1[p.charAt(i) - 'a']++;
+            ctn2[s.charAt(i) - 'a']++;
         }
         if(Arrays.equals(ctn1,ctn2)){
             list.add(0);
@@ -1015,6 +1015,137 @@ class Solution58 {
 
         }
     }
+}
+
+class Solution60 {
+    public String minWindow(String s, String t) {
+        String subStr = "";
+        int n = s.length();
+        int m = t.length();
+        if(n < m){
+            return subStr;
+        }
+
+        int[] ctn1 = new int[128];
+        int[] ctn2 = new int[128];
+        for (int i = 0; i < m; i++) {
+            ctn1[s.charAt(i) - 'A']++;
+            ctn2[t.charAt(i) - 'A']++;
+        }
+        if(Arrays.equals(ctn1,ctn2)){
+            return s.substring(0, m);
+        }
+        A:for (int i = m; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                ctn1[s.charAt(j)]--;
+                ctn1[s.charAt(j-i)]++;
+                if(Arrays.equals(ctn1,ctn2)){
+                    subStr = s.substring(j-i,j);
+                    break A;
+                }
+            }
+        }
+        return subStr;
+
+
+    }
+
+    @Test
+    public void test(){
+        String s = "ADOBECODEBANC";
+        String p = "ABC";
+        String s1 = minWindow(s, p);
+        System.out.println(s1);
+    }
+}
+
+class Solution61 {
+    public boolean isPalindrome(String s) {
+
+        StringBuilder  sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if(('0' <= s.charAt(i) && s.charAt(i) <= '9')
+                    || ('A' <= s.charAt(i) && s.charAt(i) <= 'Z')
+                    || ('a' <= s.charAt(i) && s.charAt(i)  <= 'z')
+            ){
+                sb.append(s.charAt(i));
+            }
+        }
+        String str = sb.toString().toLowerCase();
+        boolean flag = true;
+        for (int i = 0; i < str.length() / 2; i++) {
+            if(str.charAt(i) != str.charAt(str.length() - 1 -i)){
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+
+    }
+
+    @Test
+    public void test(){
+        String s = "A man, a plan, a canal: Panama";
+        boolean palindrome = isPalindrome(s);
+        System.out.println(palindrome);
+    }
+}
+
+
+class Solution62 {
+    public boolean validPalindrome(String s) {
+        boolean flag = true;
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i < s.length() / 2; i++) {
+            if(s.charAt(i) != s.charAt(s.length() - 1 -i)){
+                flag = false;
+                left = i;
+                right = s.length() - 1 - i;
+                break;
+            }
+        }
+        if(flag){
+            return flag;
+        }
+        flag = true;
+        String lefStr = s.substring(0,left) + s.substring(left + 1);
+        for (int i = 0; i < lefStr.length(); i++) {
+            if(lefStr.charAt(i) != lefStr.charAt(lefStr.length() - 1 -i)){
+                flag = false;
+                break;
+            }
+
+        }
+        if(flag){
+            return true;
+        }
+        flag = true;
+        String rightStr;
+        if(right == s.length() - 1){
+            rightStr = s.substring(0,s.length() - 1);
+        }else{
+            rightStr = s.substring(0,right) + s.substring(right + 1);
+        }
+        for (int i = 0; i < rightStr.length(); i++) {
+            if(rightStr.charAt(i) != rightStr.charAt(rightStr.length() - 1 -i)){
+                flag = false;
+                break;
+            }
+
+        }
+        return flag;
+    }
+
+    @Test
+    public void test(){
+        String s = "abc";
+        boolean b = validPalindrome(s);
+        System.out.println(b);
+
+    }
+
+
 }
 
 
