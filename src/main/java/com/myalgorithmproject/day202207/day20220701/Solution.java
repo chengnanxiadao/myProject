@@ -728,7 +728,6 @@ class Solution53 {
 
 class Solution54 {
     /**
-     *
      * @param nums
      * @param k
      * @return
@@ -739,7 +738,7 @@ class Solution54 {
             int sum = 0;
             for (int j = i; j >= 0; j--) {
                 sum += nums[j];
-                if(sum == k){
+                if (sum == k) {
                     count++;
                 }
 
@@ -784,7 +783,7 @@ class Solution56 {
 
         for (int i = 0; i < nums.length; i++) {
             sumRight -= nums[i];
-            if(sumLeft == sumRight){
+            if (sumLeft == sumRight) {
                 index = i;
                 break;
             }
@@ -796,7 +795,7 @@ class Solution56 {
     }
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1,7,3,6,5,6};
+        int[] nums = new int[]{1, 7, 3, 6, 5, 6};
         int i = pivotIndex(nums);
 
     }
@@ -808,10 +807,10 @@ class NumMatrix {
     public NumMatrix(int[][] matrix) {
         int n = matrix.length;
         int m = matrix[0].length;
-        nums = new int[n][m+1];
-        for(int i = 0;i < n;i++){
-            for(int j = 0;j < m;j++){
-                nums[i][j+1] = nums[i][j] + matrix[i][j];
+        nums = new int[n][m + 1];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                nums[i][j + 1] = nums[i][j] + matrix[i][j];
             }
         }
 
@@ -819,7 +818,7 @@ class NumMatrix {
 
     public int sumRegion(int row1, int col1, int row2, int col2) {
         int sum = 0;
-        for(int i = row1;i < row2;i++){
+        for (int i = row1; i < row2; i++) {
             sum += nums[i][col2 + 1] - nums[i][col1];
         }
         return sum;
@@ -832,14 +831,15 @@ class Solution57 {
 
     /**
      * 递归求法就是shit 这俩案例直接超时了
-     *   String s1 = "trinitrophenylmethylnitramine";
-     *   String s2 = "dinitrophenylhydrazinetrinitrophenylmethylnitramine";
+     * String s1 = "trinitrophenylmethylnitramine";
+     * String s2 = "dinitrophenylhydrazinetrinitrophenylmethylnitramine";
+     *
      * @param s1
      * @param s2
      * @return
      */
     public boolean checkInclusion(String s1, String s2) {
-        if(s1.length() > s2.length()){
+        if (s1.length() > s2.length()) {
             return false;
         }
         long start = System.currentTimeMillis();
@@ -848,7 +848,7 @@ class Solution57 {
         System.out.println((end - start) / 1000);
         boolean flag = false;
         for (String s : allPermuteStr) {
-            if(s2.contains(s)){
+            if (s2.contains(s)) {
                 flag = true;
                 break;
             }
@@ -857,37 +857,37 @@ class Solution57 {
 
     }
 
-    public List<String> getAllPermuteStr(String s){
+    public List<String> getAllPermuteStr(String s) {
         List<String> list = new ArrayList<>();
-        permute(s.toCharArray(),0,list);
+        permute(s.toCharArray(), 0, list);
         return list;
     }
 
     public void permute(char[] chars, int index, List<String> list) {
-        if(index == chars.length - 1){
+        if (index == chars.length - 1) {
             list.add(new String(chars));
-        }else{
+        } else {
             boolean[] flag = new boolean[256];
             for (int i = index; i < chars.length; i++) {
-                if(!flag[chars[i]]){
+                if (!flag[chars[i]]) {
                     flag[chars[i]] = true;
-                    swap(chars,i,index);
-                    permute(chars,index+1,list);
-                    swap(chars,i,index);
+                    swap(chars, i, index);
+                    permute(chars, index + 1, list);
+                    swap(chars, i, index);
                 }
 
             }
         }
     }
 
-    public void swap(char[] chars, int i ,int index){
+    public void swap(char[] chars, int i, int index) {
         char temp = chars[i];
         chars[i] = chars[index];
         chars[index] = temp;
     }
 
     @Test
-    public void test(){
+    public void test() {
         String s1 = "trinitrophenylmethylnitramine";
         String s2 = "dinitrophenylhydrazinetrinitrophenylmethylnitramine";
         long start = System.currentTimeMillis();
@@ -899,7 +899,7 @@ class Solution57 {
     public boolean checkInclusion3(String s1, String s2) {
         int n = s1.length();
         int m = s2.length();
-        if(n > m){
+        if (n > m) {
             return false;
         }
         int[] ctn1 = new int[26];
@@ -908,13 +908,13 @@ class Solution57 {
             ctn1[s1.charAt(i) - 'a']++;
             ctn1[s2.charAt(i) - 'a']++;
         }
-        if(Arrays.equals(ctn1,ctn2)){
+        if (Arrays.equals(ctn1, ctn2)) {
             return true;
         }
         for (int i = n; i < m; i++) {
             ctn2[s2.charAt(i) - 'a']++;
-            ctn2[s2.charAt(i-n) - 'a']--;
-            if(Arrays.equals(ctn1,ctn2)){
+            ctn2[s2.charAt(i - n) - 'a']--;
+            if (Arrays.equals(ctn1, ctn2)) {
                 return true;
             }
 
@@ -924,35 +924,34 @@ class Solution57 {
     }
 
 
-
     public boolean checkInclusion2(String s1, String s2) {
         int[] s1Tmp = new int[26];
-        for(int i = 0; i < s1.length() ; i ++){
+        for (int i = 0; i < s1.length(); i++) {
             s1Tmp[s1.charAt(i) - 'a']++;
         }
         int[] s2Tmp = new int[26];
         int l = 0;
-        for(int i = 0; i < s2.length() ; i ++){
+        for (int i = 0; i < s2.length(); i++) {
             s2Tmp[s2.charAt(i) - 'a']++;
             boolean flag = true;
-            for(int j = 0 ; j < s2Tmp.length ; j ++){
-                if(s1Tmp[j] > 0 && s2Tmp[j] < s1Tmp[j]){
+            for (int j = 0; j < s2Tmp.length; j++) {
+                if (s1Tmp[j] > 0 && s2Tmp[j] < s1Tmp[j]) {
                     flag = false;
                     break;
                 }
             }
-            if(flag){
-                while(l <= i - s1.length()){
+            if (flag) {
+                while (l <= i - s1.length()) {
                     s2Tmp[s2.charAt(l++) - 'a']--;
                 }
                 flag = true;
-                for(int j = 0 ; j < s2Tmp.length ; j ++){
-                    if(s1Tmp[j] > 0 && s2Tmp[j] < s1Tmp[j]){
+                for (int j = 0; j < s2Tmp.length; j++) {
+                    if (s1Tmp[j] > 0 && s2Tmp[j] < s1Tmp[j]) {
                         flag = false;
                         break;
                     }
                 }
-                if(flag){
+                if (flag) {
                     return true;
                 }
             }
@@ -965,7 +964,7 @@ class Solution57 {
 class Solution58 {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> list = new ArrayList<>();
-        if(p.length() > s.length()){
+        if (p.length() > s.length()) {
             return list;
         }
         int n = p.length();
@@ -976,13 +975,13 @@ class Solution58 {
             ctn1[p.charAt(i) - 'a']++;
             ctn2[s.charAt(i) - 'a']++;
         }
-        if(Arrays.equals(ctn1,ctn2)){
+        if (Arrays.equals(ctn1, ctn2)) {
             list.add(0);
         }
         for (int i = n; i < m; i++) {
             ++ctn2[s.charAt(i) - 'a'];
             --ctn2[s.charAt(i - n) - 'a'];
-            if(Arrays.equals(ctn1,ctn2)){
+            if (Arrays.equals(ctn1, ctn2)) {
                 list.add(i - n + 1);
             }
         }
@@ -991,9 +990,9 @@ class Solution58 {
     }
 
     @Test
-    public void test(){
+    public void test() {
         String s = "cbaebabacd";
-        String p ="abc";
+        String p = "abc";
         List<Integer> anagrams = findAnagrams(s, p);
         System.out.println(anagrams);
     }
@@ -1003,12 +1002,12 @@ class Solution58 {
         public int lengthOfLongestSubstring(String s) {
             int[] dic = new int[128];
             int max = 0;
-            for (int l = 0,r = 0; r <s.length() ; r++) {
+            for (int l = 0, r = 0; r < s.length(); r++) {
                 dic[s.charAt(r)]++;
-                while(dic[s.charAt(r)] > 1){
+                while (dic[s.charAt(r)] > 1) {
                     dic[s.charAt(l++)]--;
                 }
-                max = Math.max(max,r - l + 1);
+                max = Math.max(max, r - l + 1);
 
             }
             return max;
@@ -1022,7 +1021,7 @@ class Solution60 {
         String subStr = "";
         int n = s.length();
         int m = t.length();
-        if(n < m){
+        if (n < m) {
             return subStr;
         }
 
@@ -1032,15 +1031,16 @@ class Solution60 {
             ctn1[s.charAt(i) - 'A']++;
             ctn2[t.charAt(i) - 'A']++;
         }
-        if(Arrays.equals(ctn1,ctn2)){
+        if (Arrays.equals(ctn1, ctn2)) {
             return s.substring(0, m);
         }
-        A:for (int i = m; i < n; i++) {
+        A:
+        for (int i = m; i < n; i++) {
             for (int j = i; j < n; j++) {
                 ctn1[s.charAt(j)]--;
-                ctn1[s.charAt(j-i)]++;
-                if(Arrays.equals(ctn1,ctn2)){
-                    subStr = s.substring(j-i,j);
+                ctn1[s.charAt(j - i)]++;
+                if (Arrays.equals(ctn1, ctn2)) {
+                    subStr = s.substring(j - i, j);
                     break A;
                 }
             }
@@ -1051,7 +1051,7 @@ class Solution60 {
     }
 
     @Test
-    public void test(){
+    public void test() {
         String s = "ADOBECODEBANC";
         String p = "ABC";
         String s1 = minWindow(s, p);
@@ -1062,19 +1062,19 @@ class Solution60 {
 class Solution61 {
     public boolean isPalindrome(String s) {
 
-        StringBuilder  sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
-            if(('0' <= s.charAt(i) && s.charAt(i) <= '9')
+            if (('0' <= s.charAt(i) && s.charAt(i) <= '9')
                     || ('A' <= s.charAt(i) && s.charAt(i) <= 'Z')
-                    || ('a' <= s.charAt(i) && s.charAt(i)  <= 'z')
-            ){
+                    || ('a' <= s.charAt(i) && s.charAt(i) <= 'z')
+            ) {
                 sb.append(s.charAt(i));
             }
         }
         String str = sb.toString().toLowerCase();
         boolean flag = true;
         for (int i = 0; i < str.length() / 2; i++) {
-            if(str.charAt(i) != str.charAt(str.length() - 1 -i)){
+            if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
                 flag = false;
                 break;
             }
@@ -1084,7 +1084,7 @@ class Solution61 {
     }
 
     @Test
-    public void test(){
+    public void test() {
         String s = "A man, a plan, a canal: Panama";
         boolean palindrome = isPalindrome(s);
         System.out.println(palindrome);
@@ -1098,37 +1098,37 @@ class Solution62 {
         int left = 0;
         int right = 0;
         for (int i = 0; i < s.length() / 2; i++) {
-            if(s.charAt(i) != s.charAt(s.length() - 1 -i)){
+            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {
                 flag = false;
                 left = i;
                 right = s.length() - 1 - i;
                 break;
             }
         }
-        if(flag){
+        if (flag) {
             return flag;
         }
         flag = true;
-        String lefStr = s.substring(0,left) + s.substring(left + 1);
+        String lefStr = s.substring(0, left) + s.substring(left + 1);
         for (int i = 0; i < lefStr.length(); i++) {
-            if(lefStr.charAt(i) != lefStr.charAt(lefStr.length() - 1 -i)){
+            if (lefStr.charAt(i) != lefStr.charAt(lefStr.length() - 1 - i)) {
                 flag = false;
                 break;
             }
 
         }
-        if(flag){
+        if (flag) {
             return true;
         }
         flag = true;
         String rightStr;
-        if(right == s.length() - 1){
-            rightStr = s.substring(0,s.length() - 1);
-        }else{
-            rightStr = s.substring(0,right) + s.substring(right + 1);
+        if (right == s.length() - 1) {
+            rightStr = s.substring(0, s.length() - 1);
+        } else {
+            rightStr = s.substring(0, right) + s.substring(right + 1);
         }
         for (int i = 0; i < rightStr.length(); i++) {
-            if(rightStr.charAt(i) != rightStr.charAt(rightStr.length() - 1 -i)){
+            if (rightStr.charAt(i) != rightStr.charAt(rightStr.length() - 1 - i)) {
                 flag = false;
                 break;
             }
@@ -1138,14 +1138,111 @@ class Solution62 {
     }
 
     @Test
-    public void test(){
+    public void test() {
         String s = "abc";
         boolean b = validPalindrome(s);
         System.out.println(b);
 
     }
+}
 
+class Solution63 {
+    public int countSubstrings(String s) {
+        int sum = 0;
+        for (int i = 1; i <= s.length(); i++) {
+            int count = 0;
+            for (int j = 0; j < s.length() - i + 1; j++) {
+                String str = s.substring(j, j + i);
+                if (checkStr(str)) {
+                    count++;
+                }
+            }
+            sum += count;
+        }
+        return sum;
+    }
+
+    public boolean checkStr(String str) {
+        boolean flag = true;
+        for (int i = 0; i < str.length() / 2; i++) {
+            if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    @Test
+    public void test() {
+        String s = "abc";
+        int i = countSubstrings(s);
+        System.out.println(i);
+    }
 
 }
+
+class Solution64 {
+    private int count = 0;
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        removeNthFromEnd(head.next, n);
+        count++;
+        if (count == n) {
+            return head.next;
+        }
+
+        return head;
+    }
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        public ListNode() {
+        }
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+
+        public ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+}
+
+public class Solution65 {
+    public ListNode detectCycle(ListNode head) {
+        Set<ListNode> set = new HashSet<>();
+        ListNode node = head;
+        while(node != null){
+            if(set.contains(node)){
+                return node;
+            }else{
+                set.add(node);
+            }
+            node = node.next;
+
+        }
+        return null;
+
+    }
+
+    class ListNode {
+     int val;
+     ListNode next;
+     ListNode(int x) {
+         val = x;
+         next = null;
+     }
+    }
+}
+
+
 
 
